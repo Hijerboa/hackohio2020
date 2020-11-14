@@ -15,103 +15,37 @@
     <link rel="shortcut icon" href="#">
 </head>
 
-<section>
-    <header>
-        <style>
-            .navbar {
-                background-color: #d97c27;
-                border-color: #d97c27;
-                border-radius: 0;
-            }
-
-            .navbar .navbar-brand,
-            .navbar .navbar-brand:hover,
-            .navbar .navbar-brand:focus {
-                color: #FFF;
-            }
-
-            .navbar .navbar-nav > li > a {
-                color: #FFF;
-            }
-
-            .navbar .navbar-nav > li > a:hover,
-            .navbar .navbar-nav > li > a:focus {
-                background-color: #C96100;
-            }
-
-            .navbar .navbar-nav > .active > a,
-            .navbar .navbar-nav > .active > a:hover,
-            .navbar .navbar-nav > .active > a:focus {
-                color: #FFF;
-                background-color: #C96100;
-            }
-
-            .navbar .navbar-text {
-                color: #FFF;
-            }
-
-            .navbar .navbar-toggle {
-                border-color: #C96100;
-            }
-
-            .navbar .navbar-toggle:hover,
-            .navbar .navbar-toggle:focus {
-                background-color: #C96100;
-            }
-
-            .navbar .navbar-toggle .icon-bar {
-                background-color: #FFF;
-            }
-            #navBrand{
-                font-weight: bold;
-                font-size: 20px;
-            }
-            #flashedMessage{
-                text-align: center;
-                font-size: 20px;
-                font-weight: bold;
-            }
-            #map {
-              height: 80vh;
-              width: 80vw;
-            }
-        </style>
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-            <a class="navbar-bard" href="/" id="navBrand">
-                <img src="#" width="30" height="30" alt="Rona Fraud">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class ="collapse navbar-collapse" id="siteNavbar">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Margin of Victory</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Covid Case Density</a></li>
-                    <li clas ="nav-item"><a class="nav-link" href="#">Covid Case Density vs Margin of Victory</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    </br>
-    <center><div id="map"></div></center>
-
-    <footer class="page-footer">
-      <div class="footer-copyright text-center py-3">© 2020 Copyright: The Meme Men
+<body>
+    <section>
+        <header>
+            <link rel="stylesheet" href="static/css/main.css">
+            <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <a class="navbar-bard" href="/" id="navBrand">
+                    <img src="#" width="30" height="30" alt="Rona Fraud">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class ="collapse navbar-collapse" id="siteNavbar">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="#">Margin of Victory</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Covid Case Density</a></li>
+                        <li clas ="nav-item"><a class="nav-link" href="#">Covid Case Density vs Margin of Victory</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
         </br>
-        <a href="#">About</a>
-      </div>
+        <div id="map"></div>
+    </section>
+    <footer class="page-footer">
+        <div class="footer-copyright text-center py-3">© 2020 Copyright: The Meme Men
+            </br>
+            <a href="#">About</a>
+        </div>
+        <script src="static/js/map.js"></script>
     </footer>
-</section>
+<body>
 
-<script language="javascript">
-var map = L.map( 'map', {
-    center: [20.0, 5.0],
-    minZoom: 2,
-    zoom: 2
-});
-L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    subdomains: ['a','b','c']
-}).addTo( map );
-</script>
+
