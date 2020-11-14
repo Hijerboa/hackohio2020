@@ -219,6 +219,85 @@ def temp_vpop(vpop_data):
             conn.close()
             print('Database connection closed.')
 
+def insert_all_new_rows(covid_data, death_data):
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # read connection parameters
+        params = config()
+
+        # connect to the PostgreSQL server
+        print('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params)
+		
+        # create a cursor
+        cur = conn.cursor()
+        
+        # do things here
+        select_date_statement = 'select max(r.date) from daily_record r;'
+        cur.execute(select_date_statement)
+        most_recent_date = cur.fetchone()
+
+        sql = 'INSERT INTO temp_vpop VALUES(%s, %s, %s);'
+        first_row = True
+        for row in vpop_data:
+            if not first_row:
+                cur.execute(sql, (row[0], row[1], row[2],))
+                #t_count += 1
+                #print('row ' + str(t_count) + ' inserted.')
+            first_row = False
+        conn.commit()
+        print('Inserted ' + str(len(pres_data)) + ' items successfully.')
+
+	    # close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+
+def insert_all_rows(covid_data, death_data):
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # read connection parameters
+        params = config()
+
+        # connect to the PostgreSQL server
+        print('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params)
+		
+        # create a cursor
+        cur = conn.cursor()
+        
+        # Make a list of records we want to submit
+        records = []
+
+
+        # do things here
+        sql = 'INSERT INTO daily_record(COUNTY_FIPS, DATE, TOTAL_CASES, TOTAL_DEATHS) VALUES(%s, %s, %s, %s);'
+        ct = 0
+        for y in range(1740, 1882):
+            if not int(covid_data[y][0]) == 0:
+                for x in range(4, len(covid_data[y])):
+                    cur.execute(sql, (covid_data[y][0], covid_data[0][x], covid_data[y][x], death_data[y][x]))
+                    ct += 1
+                print('Data for ' + covid_data[y][1] + ' ' + covid_data[y][2] + ' (row ' + str(y) + ') inserted for all available dates') 
+                conn.commit()
+        print('Inserted ' + str(ct) + ' items successfully.')
+
+	    # close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+
+
 
 if __name__ == '__main__':
     pop_data = load_csv('../raw/covid_county_population_usafacts.csv')
@@ -230,6 +309,7 @@ if __name__ == '__main__':
     #temp_pres(pres_data)
     #temp_cov(covid_data)
     #temp_state(state_data)
-    temp_vpop(vpop_data)
+    #temp_vpop(vpop_data)
 
+    insert_all_rows(covid_data, death_data)
     #print(death_data)
