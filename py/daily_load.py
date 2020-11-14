@@ -70,6 +70,6 @@ def run(cases, deaths):
             print('Database connection closed.')
 
 if __name__ == '__main__':
-    cases = load_csv('../raw/covid_confirmed_usafacts (1).csv')
-    deaths = load_csv('../raw/covid_deaths_usafacts (1).csv')
+    cases = load_csv('../raw/covid_confirmed_usafacts.csv')
+    deaths = load_csv('../raw/covid_deaths_usafacts.csv')
     run(cases, deaths)
