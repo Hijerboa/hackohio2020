@@ -29,7 +29,6 @@ def get_db():
             user=dbconfig['user'],
             password=dbconfig['password']
         )
-        print(g.db)
     return g.db
 
 
