@@ -4,6 +4,7 @@ import psycopg2.extras
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify
 )
+from flask_cors import cross_origin
 
 from . import db
 
@@ -18,6 +19,7 @@ def index():
 
 
 @bp.route('/geodata', methods=['GET'])
+@cross_origin()
 def geodata():
     global cache
     method = request.args.get('method')
@@ -55,20 +57,27 @@ def geodata():
     else:
         cursor.close()
         error = 'Error: Invalid method specified!, Try one of {countydata, statedata, countystatedata}!'
-        return jsonify({'err': error})
+        response = jsonify({'err': error})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     
     try:
         cursor.execute(query)
         records = cursor.fetchall()
         cache[method] = records
         cursor.close()
-        return jsonify(records)
+        response = jsonify(records)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     except BaseException:
         error = 'Error: An unexpected error occurred, try again later!'
-        return jsonify({'err': error})
+        response = jsonify({'err': error})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 
 @bp.route('/coviddata', methods=['GET'])
+@cross_origin()
 def coviddata():
     method = request.args.get('method')
     granularity = request.args.get('granularity')
@@ -174,7 +183,9 @@ def coviddata():
         else:
             cursor.close()
             error = ''
-            return jsonify({'err': error})
+            response = jsonify({'err': error})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
     elif method == 'cases100katdate':
         if granularity == 'county':
             query = (
@@ -220,7 +231,9 @@ def coviddata():
         else:
             cursor.close()
             error = ''
-            return jsonify({'err': error})
+            response = jsonify({'err': error})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
     elif method == 'deaths100katdate':
         if granularity == 'county':
             query = (
@@ -270,7 +283,9 @@ def coviddata():
         else:
             cursor.close()
             error = ''
-            return jsonify({'err': error})
+            response = jsonify({'err': error})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
     elif method == 'cases100katdatevmov':
         if granularity == 'county':
             query = (
@@ -319,7 +334,9 @@ def coviddata():
         else:
             cursor.close()
             error = ''
-            return jsonify({'err': error})
+            response = jsonify({'err': error})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
     elif method == 'deaths100katdatemov':
         if granularity == 'county':
             query = (
@@ -365,16 +382,24 @@ def coviddata():
         else:
             cursor.close()
             error = ''
-            return jsonify({'err': error})
+            response = jsonify({'err': error})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
     else:
         cursor.close()
         error = ''
-        return jsonify({'err': error})
+        response = jsonify({'err': error})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     
     try:
         cursor.execute(query)
         records = cursor.fetchall()
         cursor.close()
-        return jsonify(records)
+        response = jsonify(records)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     except BaseException as e:
-        return jsonify({'err': str(e)})
+        response = jsonify({'err': str(e)})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response

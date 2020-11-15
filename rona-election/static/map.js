@@ -28,7 +28,7 @@ async function requestGeodata() {
   var stateParams = new URLSearchParams();
   stateParams.append('method', 'statedata');
   var stateRequest = new Request("http://127.0.0.1:5000/geodata?"+stateParams.toString());
-  
+
   const [counties, states] = await Promise.all([
     (await fetch(countyRequest)).json(),
     (await fetch(stateRequest)).json()
