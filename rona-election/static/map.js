@@ -23,12 +23,12 @@ async function requestGeodata() {
   // TODO: In a live environment, the requests need changed to: http://themememen.com:5000/...
   var countyParams = new URLSearchParams();
   countyParams.append('method', 'countydata');
-  var countyRequest = new Request("http://127.0.0.1:5000/geodata?"+countyParams.toString());
+  var countyRequest = new Request("http://themememen:5000/geodata?"+countyParams.toString());
 
   var stateParams = new URLSearchParams();
   stateParams.append('method', 'statedata');
-  var stateRequest = new Request("http://127.0.0.1:5000/geodata?"+stateParams.toString());
-  
+  var stateRequest = new Request("http://themememen:5000/geodata?"+stateParams.toString());
+
   const [counties, states] = await Promise.all([
     (await fetch(countyRequest)).json(),
     (await fetch(stateRequest)).json()
