@@ -20,6 +20,7 @@
         <header>
             <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
             <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+            <script src="{{ url_for('static', filename='map.js') }}"></script>
             <nav class="navbar navbar-expand-md">
                 <a class="navbar-bard" href="#" id="navBrand">
                     <img src="#" width="30" height="30" alt="Rona Fraud">
@@ -37,12 +38,12 @@
         </header>
         </br>
         <div class="sidenav">
-            <a href="#">Deaths at date</a>
-            <a href="#">Cases at date</a>
-            <a href="#">Deaths / 100k at date</a>
-            <a href="#">Cases / 100k at date</a>
-            <a href="#">Deaths / 100k at date v. Margin of Victory</a>
-            <a href="#">Cases / 100k at date v. Margin of Victory</a>
+            <a href="#" onclick="onSidebarClicked('deathsAtDate');">Deaths at date</a>
+            <a href="#" onclick="onSidebarClicked('casesAtDate');">Cases at date</a>
+            <a href="#" onclick="onSidebarClicked('deathsBy100kAtDate');">Deaths / 100k at date</a>
+            <a href="#" onclick="onSidebarClicked('casesBy100kAtDate');">Cases / 100k at date</a>
+            <a href="#" onclick="onSidebarClicked('deathsBy100kAtDateVsMOV');">Deaths / 100k at date v. Margin of Victory</a>
+            <a href="#" onclick="onSidebarClicked('casesBy100kAtDateVsMOV');">Cases / 100k at date v. Margin of Victory</a>
         </div>
         
         <div id="map">
@@ -51,7 +52,6 @@
             <div id="botthing">
                 <p>© 2020 Copyright: The Meme Men</p>
             </div>
-            <script src="{{ url_for('static', filename='map.js') }}"></script>
         </footer>
     </section>
 <body>

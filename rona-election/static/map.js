@@ -1,6 +1,24 @@
 var countyObjects = [];
 var map = null;
 
+function onSidebarClicked(e) {
+  if (e === 'deathsAtDate') {
+
+  } else if (e === 'casesAtDate') {
+
+  } else if (e === 'deathsBy100kAtDate') {
+
+  } else if (e === 'casesBy100kAtDate') {
+
+  } else if (e === 'deathsBy100kAtDateVsMOV') {
+
+  } else if (e === 'casesBy100kAtDateVsMOV') {
+
+  } else {
+    console.log("Invalid sidebar option!");
+  }
+}
+
 async function requestGeodata() {
   // TODO: In a live environment, the requests need changed to: http://themememen.com:5000/...
   var countyParams = new URLSearchParams();
