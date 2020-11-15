@@ -1,0 +1,106 @@
+.navbar {
+  background-color: #111111;
+  border-radius: 3;
+  height: 6vh;
+}
+
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus {
+  color: #FFF;
+}
+
+.navbar .navbar-nav > li > a {
+  color: #818181;
+  font-size: 3vh;
+}
+
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+  color: #FFF;
+  background-color: #818181;
+}
+
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:hover,
+.navbar .navbar-nav > .active > a:focus {
+  color: #FFF;
+  background-color: #818181;
+}
+
+.navbar .navbar-text {
+  color: #FFF;
+}
+
+.navbar .navbar-toggle {
+  border-color: #818181;
+}
+
+.navbar .navbar-toggle:hover,
+.navbar .navbar-toggle:focus {
+  background-color: #818181;
+}
+
+.navbar .navbar-toggle .icon-bar {
+  background-color: #FFF;
+}
+
+#navBrand {
+  font-weight: bold;
+  font-size: 3vh;
+  text-decoration: none;
+}
+
+#map {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 94vh;
+  width: 85vw;
+  margin: 0 auto;
+}
+
+.sidenav {
+  height: 88%;
+  width: 15%;
+  position: fixed;
+  z-index: 1;
+  top: 6vh;
+  left: 0;
+  background-color: #202020;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: auto;
+  scroll-behavior: smooth;
+  direction: rtl;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.sidenav a {
+  padding: 1vh .5vh .5vh 1vh;
+  text-decoration: none;
+  font-size: 3vh;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #FFF;
+  background-color: #818181;
+}
+
+#botthing {
+  padding: 1.5vh;
+  text-decoration: none;
+  font-size: .85vw;
+  color: #FFF;
+  display: block;
+  position: fixed;
+  bottom: 0;
+  height: 6vh;
+  width: 100%;
+  background-color: #111;
+}
