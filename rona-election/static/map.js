@@ -10,8 +10,8 @@ $(document).ready(function(){
 	map = L.map('map',{center: [31.51, -96.42], minZoom: 4, zoom: 4});
 	L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',subdomains: ['a','b','c']}).addTo( map );
   var params = new URLSearchParams();
-  params.append('method': countydata);
-  var myRequest = new Request("http://127.0.0.1:5000/geojson?"+params.toString());
+  params.append('method', 'countydata');
+  var myRequest = new Request("http://127.0.0.1:5000/geodata?"+params.toString());
   myRequest.body = params;
   var countyLines = fetch(myRequest).then(function(response) {
     let json_promise = response.json();
@@ -25,8 +25,8 @@ $(document).ready(function(){
     });
   });
   var params = new URLSearchParams();
-  params.append('method': statedata);
-  var myRequest = new Request("http://127.0.0.1:5000/geojson?"+params.toString());
+  params.append('method', 'statedata');
+  var myRequest = new Request("http://127.0.0.1:5000/geodata?"+params.toString());
   myRequest.body = params;
   var stateLines = fetch(myRequest).then(function(response) {
     let json_promise = response.json();
