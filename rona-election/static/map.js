@@ -2,6 +2,7 @@ var countyObjects = [];
 var map = null;
 
 async function requestGeodata() {
+  // TODO: In a live environment, the requests need changed to: http://themememen.com:5000/...
   var countyParams = new URLSearchParams();
   countyParams.append('method', 'countydata');
   var countyRequest = new Request("http://127.0.0.1:5000/geodata?"+countyParams.toString());
@@ -26,9 +27,9 @@ async function drawMap() {
     countyObjects = countyObjects.concat(states.map((e) => {
       return JSON.parse(e);
     }));
-    for(i=0; i<countyObjects.length; i++){
-      L.geoJson(countyObjects[i]).addTo(map);
-    }
+    countyObjects.map((e) => {
+      L.geoJson(e, {weight: 1}).addTo(map);
+    });
   });
 }
 

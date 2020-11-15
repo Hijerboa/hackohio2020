@@ -33,7 +33,7 @@ def geodata():
             """
             SELECT ST_AsGeoJSON(t.*)
             FROM (SELECT * FROM tl_2019_us_county T WHERE T.statefp != '02' AND T.statefp != '09' AND T.statefp != '23' AND T.statefp != '33' AND T.statefp != '44' AND T.statefp != '50' AND T.statefp != '11')
-            AS t(id, name, geom)
+            AS t(gid, statefp, countyfp)
             """
         )
     elif method == 'statedata':
@@ -41,7 +41,7 @@ def geodata():
             """
             SELECT ST_AsGeoJSON(t.*)
             FROM (SELECT * FROM tl_2019_us_state T WHERE T.statefp = '02' OR T.statefp = '09' OR T.statefp = '23' OR T.statefp = '33' OR T.statefp = '44' OR T.statefp = '50' OR T.statefp = '11')
-            AS t(id, name, geom);
+            AS t(gid, region, division);
             """
         )
     elif method == 'countystatedata':
@@ -49,7 +49,7 @@ def geodata():
             """
             SELECT ST_AsGeoJSON(t.*)
             FROM (SELECT * FROM tl_2019_us_state)
-            AS t(id, name, geom);
+            AS t(gid, region, division);
             """
         )
     else:
