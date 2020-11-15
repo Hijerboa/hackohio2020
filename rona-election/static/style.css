@@ -1,7 +1,6 @@
 .navbar {
-  background-color: #d97c27;
-  border-color: #d97c27;
-  border-radius: 0;
+  background-color: #111111;
+  border-radius: 3;
   height: 6vh;
 }
 
@@ -12,19 +11,21 @@
 }
 
 .navbar .navbar-nav > li > a {
-  color: #FFF;
+  color: #818181;
+  font-size: 3vh;
 }
 
 .navbar .navbar-nav > li > a:hover,
 .navbar .navbar-nav > li > a:focus {
-  background-color: #C96100;
+  color: #FFF;
+  background-color: #818181;
 }
 
 .navbar .navbar-nav > .active > a,
 .navbar .navbar-nav > .active > a:hover,
 .navbar .navbar-nav > .active > a:focus {
   color: #FFF;
-  background-color: #C96100;
+  background-color: #818181;
 }
 
 .navbar .navbar-text {
@@ -32,29 +33,22 @@
 }
 
 .navbar .navbar-toggle {
-  border-color: #C96100;
+  border-color: #818181;
 }
 
 .navbar .navbar-toggle:hover,
 .navbar .navbar-toggle:focus {
-  background-color: #C96100;
+  background-color: #818181;
 }
 
 .navbar .navbar-toggle .icon-bar {
   background-color: #FFF;
 }
 
-#navBrand{
+#navBrand {
   font-weight: bold;
-  font-size: 20px;
-}
-
-
-
-#flashedMessage {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 3vh;
+  text-decoration: none;
 }
 
 #map {
@@ -73,42 +67,36 @@
   z-index: 1;
   top: 6vh;
   left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding-top: 10px;
-  padding-left: 10px;
+  background-color: #202020;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: auto;
   scroll-behavior: smooth;
   direction: rtl;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  background: #818181;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #111;
+  display: none;
 }
 
 .sidenav a {
-  padding: 6px 8px 6px 16px;
+  padding: 1vh .5vh .5vh 1vh;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 3vh;
   color: #818181;
   display: block;
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
-  background-color: #d97c27;
+  color: #FFF;
+  background-color: #818181;
 }
 
 #botthing {
-  padding: 6px 8px 6px 16px;
+  padding: 1.5vh;
   text-decoration: none;
-  font-size: 16px;
-  color: #818181;
+  font-size: .85vw;
+  color: #FFF;
   display: block;
   position: fixed;
   bottom: 0;
