@@ -75,7 +75,6 @@ def geodata():
     except BaseException:
         error = 'Error: An unexpected error occurred, try again later!'
         response = jsonify({'err': error})
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 
@@ -187,7 +186,6 @@ def coviddata():
             cursor.close()
             error = ''
             response = jsonify({'err': error})
-            response.headers.add('Access-Control-Allow-Origin', '*')
             return response
     elif method == 'cases100katdate':
         if granularity == 'county':
@@ -235,7 +233,6 @@ def coviddata():
             cursor.close()
             error = ''
             response = jsonify({'err': error})
-            response.headers.add('Access-Control-Allow-Origin', '*')
             return response
     elif method == 'deaths100katdate':
         if granularity == 'county':
@@ -287,7 +284,6 @@ def coviddata():
             cursor.close()
             error = ''
             response = jsonify({'err': error})
-            response.headers.add('Access-Control-Allow-Origin', '*')
             return response
     elif method == 'cases100katdatevmov':
         if granularity == 'county':
@@ -338,7 +334,6 @@ def coviddata():
             cursor.close()
             error = ''
             response = jsonify({'err': error})
-            response.headers.add('Access-Control-Allow-Origin', '*')
             return response
     elif method == 'deaths100katdatemov':
         if granularity == 'county':
@@ -386,13 +381,11 @@ def coviddata():
             cursor.close()
             error = ''
             response = jsonify({'err': error})
-            response.headers.add('Access-Control-Allow-Origin', '*')
             return response
     else:
         cursor.close()
         error = ''
         response = jsonify({'err': error})
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
     
     try:
@@ -400,9 +393,7 @@ def coviddata():
         records = cursor.fetchall()
         cursor.close()
         response = jsonify(records)
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
     except BaseException as e:
         response = jsonify({'err': str(e)})
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
