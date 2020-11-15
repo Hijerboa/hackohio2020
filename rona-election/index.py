@@ -16,63 +16,44 @@ def index():
     return render_template('index.html')
 
 
-@bp.route('/countydata', methods=['GET'])
-def countydata():
+@bp.route('/geodata', methods=['GET'])
+def geodata():
+    method = request.args.get('method')
     global cache
-    if 'countydata' not in cache:
-        conn = db.get_db()
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute(
+
+    if method in cache:
+        return cache[method]
+
+    conn = db.get_db()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    if method == 'countydata':
+        query = (
             """
             SELECT ST_AsGeoJSON(t.*)
             FROM (SELECT * FROM tl_2019_us_county T WHERE T.statefp != '02' AND T.statefp != '09' AND T.statefp != '23' AND T.statefp != '33' AND T.statefp != '44' AND T.statefp != '50' AND T.statefp != '11')
             AS t(id, name, geom)
             """
         )
-        records = cursor.fetchall()
-        cache['countydata'] = records
-    else:
-        records = cache['countydata']
-    return json.dumps(records)
-
-
-@bp.route('/countystatedata', methods=['GET'])
-def countystatedata():
-    global cache
-    if 'countystatedata' not in cache:
-        conn = db.get_db()
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute(
+    elif method == 'statedata':
+        query = (
             """
             SELECT ST_AsGeoJSON(t.*)
             FROM (SELECT * FROM tl_2019_us_state T WHERE T.statefp = '02' OR T.statefp = '09' OR T.statefp = '23' OR T.statefp = '33' OR T.statefp = '44' OR T.statefp = '50' OR T.statefp = '11')
             AS t(id, name, geom);
             """
         )
-        records = cursor.fetchall()
-        cache['countystatedata'] = records
-    else:
-        records = cache['countystatedata']
-    return json.dumps(records)
-
-
-@bp.route('/statedata', methods=['GET'])
-def statedata():
-    global cache
-    if 'statedata' not in cache:
-        conn = db.get_db()
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute(
+    elif method == 'countystatedata':
+        query = (
             """
             SELECT ST_AsGeoJSON(t.*)
             FROM (SELECT * FROM tl_2019_us_state)
             AS t(id, name, geom);
             """
         )
-        records = cursor.fetchall()
-        cache['statedata'] = records
-    else:
-        records = cache['statedata']
+    cursor.execute(query)
+    records = cursor.fetchall()
+    cache[method] = records
     return json.dumps(records)
 
 
