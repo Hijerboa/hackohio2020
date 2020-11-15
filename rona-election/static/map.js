@@ -58,8 +58,8 @@ async function requestCovidData(type) {
   covidParams.append('granularity', 'county');
   var covidRequest = new Request("http://127.0.0.1:5000/coviddata?"+covidParams.toString());
 
-  res = await Promise.all([(await fetch(covidRequest)).json()]);
-  //console.log(res);
+  const res = await Promise.all([(await fetch(covidRequest)).json()]);
+  console.log(res);
   currentData = valsToNormalized(res);
   //console.log(currentData);
 }
@@ -92,9 +92,14 @@ async function drawMap() {
     countyObjects = countyObjects.concat(states.map((e) => {
       return JSON.parse(e);
     }));
+    /*
     countyObjects.map((e) => {
       L.geoJson(e, {weight: 1}).addTo(map);
     });
+    */
+    for(i = 0; i < countyObjects.length; i++){
+      L.geoJson(countyObjects[i], {weight: 1, color: currentData[i][1]}).addTo(map);
+    }
   });
 }
 
@@ -126,6 +131,7 @@ function valsToNormalized(dBOutputs) {
   let offset = 0 - min;
   let scale = max - min;
   for(i = 0; i < dBOutputs[0].length; i++){
+    console.log((""+parseInt(((dBOutputs[0][i][1] - offset) / scale) * 255)).toString(16).toUpperCase());
     res.push([dBOutputs[0][i][0], (""+parseInt(((dBOutputs[0][i][1] - offset) / scale) * 255)).toString(16).toUpperCase()]);
   }
   console.log(res)
