@@ -1,55 +1,42 @@
 var countyObjects = [];
-var json_promise, json_promise2;
+var map = null;
+
+async function requestGeodata() {
+  var countyParams = new URLSearchParams();
+  countyParams.append('method', 'countydata');
+  var countyRequest = new Request("http://127.0.0.1:5000/geodata?"+countyParams.toString());
+
+  var stateParams = new URLSearchParams();
+  stateParams.append('method', 'statedata');
+  var stateRequest = new Request("http://127.0.0.1:5000/geodata?"+stateParams.toString());
+  
+  const [counties, states] = await Promise.all([
+    (await fetch(countyRequest)).json(),
+    (await fetch(stateRequest)).json()
+  ]);
+
+  return {counties, states};
+}
+
+async function drawMap() {
+  await requestGeodata().then(({counties, states}) => {
+    countyObjects = countyObjects.concat(counties.map((e) => {
+      return JSON.parse(e);
+    }));
+    countyObjects = countyObjects.concat(states.map((e) => {
+      return JSON.parse(e);
+    }));
+    for(i=0; i<countyObjects.length; i++){
+      L.geoJson(countyObjects[i]).addTo(map);
+    }
+  });
+}
 
 $(document).ready(function(){
-	console.log("hello there");
 	map = L.map('map',{center: [31.51, -96.42], minZoom: 4, zoom: 4});
-	L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',subdomains: ['a','b','c']}).addTo( map );
-  var params = new URLSearchParams();
-  params.append('method', 'countydata');
-  var myRequest = new Request("http://127.0.0.1:5000/geodata?"+params.toString());
-  myRequest.body = params;
-  var countyLines = fetch(myRequest).then(function(response) {
-    json_promise = response.json();
-    json_promise.then((data) => { // handle it on success
-      for(i=0; i < data.length; i++){
-        var first = JSON.parse(data[i]);
-        countyObjects.push(first);
-        //L.geoJson(first).addTo(map);
-      }
-    }, (err) => { // handle it on error
-      throw(err);
-    });
-  });
-  console.log("got county data");
-  var params = new URLSearchParams();
-  params.append('method', 'statedata');
-  var myRequest = new Request("http://127.0.0.1:5000/geodata?"+params.toString());
-  myRequest.body = params;
-  var stateLines = fetch(myRequest).then(function(response) {
-    json_promise2 = response.json();
-    json_promise2.then((data) => { // handle it on success
-      for(i=0; i < data.length; i++){
-        var first = JSON.parse(data[i]);
-        countyObjects.push(first);
-        //L.geoJson(first).addTo(map);
-      }
-    }, (err) => { // handle it on error
-      throw(err);
-    });
-  });
-  console.log("got state data");
-  Promise.all([json_promise, json_promise2]).then((values)=>{
-    console.log(countyObjects.length);
-  });
-
-  for(i=0; i<countyObjects.length; i++){
-    console.log(i);
-    L.geoJson(countyObjects[i]).addTo(map);
-  }
+  L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',subdomains: ['a','b','c']}).addTo( map );
+  drawMap();
 });
-
-
 
 //Takes a list of (ID, Value) pairs, and returns (ID, color) pairs where color is a value between 0 and 255
 function valsToNormalized(dBOutputs) {
