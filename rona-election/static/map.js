@@ -11,6 +11,7 @@ $(document).ready(function(){
     json_promise.then((data) => { // handle it on success
       for(i=0; i < data.length; i++){
         var first = JSON.parse(data[i]);
+        countyObjects.push(first);
         L.geoJson(first).addTo(map);
       }
     }, (err) => { // handle it on error
@@ -26,6 +27,7 @@ $(document).ready(function(){
     json_promise.then((data) => { // handle it on success
       for(i=0; i < data.length; i++){
         var first = JSON.parse(data[i]);
+        countyObjects.push(first);
         L.geoJson(first).addTo(map);
       }
     }, (err) => { // handle it on error
@@ -33,6 +35,8 @@ $(document).ready(function(){
     });
   });
 });
+
+
 
 //Takes a list of (ID, Value) pairs, and returns (ID, color) pairs where color is a value between 0 and 255
 function valsToNormalized(dBOutputs) {
@@ -52,4 +56,3 @@ function valsToNormalized(dBOutputs) {
   }
   return res;
 }
-
