@@ -2,6 +2,7 @@
   background-color: #d97c27;
   border-color: #d97c27;
   border-radius: 0;
+  height: 6vh;
 }
 
 .navbar .navbar-brand,
@@ -42,17 +43,76 @@
 .navbar .navbar-toggle .icon-bar {
   background-color: #FFF;
 }
+
 #navBrand{
   font-weight: bold;
   font-size: 20px;
 }
-#flashedMessage{
+
+
+
+#flashedMessage {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
 }
+
 #map {
-height: 80vh;
-width: 80vw;
-margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 94vh;
+  width: 85vw;
+  margin: 0 auto;
+}
+
+.sidenav {
+  height: 88%;
+  width: 15%;
+  position: fixed;
+  z-index: 1;
+  top: 6vh;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-top: 10px;
+  padding-left: 10px;
+  scroll-behavior: smooth;
+  direction: rtl;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: #818181;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+  background-color: #d97c27;
+}
+
+#botthing {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #818181;
+  display: block;
+  position: fixed;
+  bottom: 0;
+  height: 6vh;
+  width: 15%;
+  background-color: #111;
 }
