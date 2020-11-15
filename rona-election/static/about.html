@@ -18,9 +18,8 @@
 <body>
     <section>
         <header>
-            <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+            <link rel="stylesheet" href="about.css">
             <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-            <script src="{{ url_for('static', filename='map.js') }}"></script>
             <nav class="navbar navbar-expand-md">
                 <a class="navbar-bard" href="#" id="navBrand">
                     <img src="#" width="30" height="30" alt="Rona Election">
@@ -31,27 +30,27 @@
                 <div class ="collapse navbar-collapse" id="siteNavbar">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="#">Hall of Shame</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('static', filename='about.html') }}">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                     </ul>
                 </div>
             </nav>
         </header>
         </br>
-        <div class="sidenav">
-            <a href="#" onclick="onSidebarClicked('deathsAtDate');">Deaths at date</a>
-            <a href="#" onclick="onSidebarClicked('casesAtDate');">Cases at date</a>
-            <a href="#" onclick="onSidebarClicked('deathsBy100kAtDate');">Deaths / 100k at date</a>
-            <a href="#" onclick="onSidebarClicked('casesBy100kAtDate');">Cases / 100k at date</a>
-            <a href="#" onclick="onSidebarClicked('deathsBy100kAtDateVsMOV');">Deaths / 100k at date v. Margin of Victory</a>
-            <a href="#" onclick="onSidebarClicked('casesBy100kAtDateVsMOV');">Cases / 100k at date v. Margin of Victory</a>
-        </div>
-
-        <div id="map">
+        <div class="container">
+          <div class = "row">
+            <div class="col-lg-6 offset-lg-3">
+              <center><h1><b>Rona Election</b></h1>
+                <br>
+                <h4>This is a data visualization of the margin of Biden's victory in the 2020 presidential election vs the number of covid cases/100K residents per county in the United States</h4>
+                <h4>We used data from <a href="https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/">USAFacts</a> for the covid data, as well data from <a href="https://www.kaggle.com/unanimad/us-election-2020?select=president_county_candidate.csv">this</a> dataset for the election information</h4>
+              </center>
+            </div>
+          </div>
         </div>
         <footer>
             <div id="botthing">
-                <p>© 2020 Copyright: The Meme Men</p>
+                <center><p>© 2020 Copyright: The Meme Men</p></center>
             </div>
         </footer>
     </section>
-<body>
+</body>
