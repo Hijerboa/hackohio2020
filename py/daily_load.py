@@ -60,6 +60,14 @@ def run(cases, deaths):
             conn.commit()
             print('Inserted ' + str(ct) + ' items successfully.')
 
+            # ensure that items corresponding to the state-zones are inserted correctly
+            filter_sql = '''insert into state_record 
+                            select c.STATE_FIPS, r.date, sum(r.TOTAL_CASES), sum(r.TOTAL_DEATHS) from daily_record r, cfips_to_sfips c 
+                            where c.county_fips = r.county_fips and r.date not in (select r.date from state_record r) 
+                            group by  c.STATE_FIPS, r.date;'''
+            cur.execute(filter_sql)
+            print('Added items to state records.')
+
 	    # close the communication with the PostgreSQL
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:

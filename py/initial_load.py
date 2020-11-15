@@ -279,7 +279,7 @@ def insert_all_rows(covid_data, death_data):
         # do things here
         sql = 'INSERT INTO daily_record(COUNTY_FIPS, DATE, TOTAL_CASES, TOTAL_DEATHS) VALUES(%s, %s, %s, %s);'
         ct = 0
-        for y in range(1740, 1882):
+        for y in range(1881, 1882):
             if not int(covid_data[y][0]) == 0:
                 for x in range(4, len(covid_data[y])):
                     cur.execute(sql, (covid_data[y][0], covid_data[0][x], covid_data[y][x], death_data[y][x]))
@@ -297,19 +297,95 @@ def insert_all_rows(covid_data, death_data):
             conn.close()
             print('Database connection closed.')
 
+def insert_corrected_data(cdata):
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # read connection parameters
+        params = config()
 
+        # connect to the PostgreSQL server
+        print('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params)
+		
+        # create a cursor
+        cur = conn.cursor()
+        
+        # Make a list of records we want to submit
+        # do things here
+        sql = 'INSERT INTO state_data VALUES(%s, %s, %s, %s, %s, %s);'
+        ct = 0
+        first = True
+        for row in cdata:
+            if not first:
+                cur.execute(sql, (row[0], row[1], row[2], row[3], row[4], row[5],))
+                conn.commit()
+                print('inserted row ' + str(row))
+                ct += 1
+            first = False
+        print('Inserted ' + str(ct) + ' items successfully.')
+
+	    # close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+
+def import_cfips_to_sfips(dat):
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # read connection parameters
+        params = config()
+
+        # connect to the PostgreSQL server
+        print('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params)
+		
+        # create a cursor
+        cur = conn.cursor()
+        
+        # Make a list of records we want to submit
+        # do things here
+        sql = 'INSERT INTO cfips_to_sfips VALUES(%s, %s);'
+        ct = 0
+        first = True
+        for row in dat:
+            if not first:
+                cur.execute(sql, (row[0], row[1],))
+                conn.commit()
+                print('inserted row ' + str(row))
+                ct += 1
+            first = False
+        print('Inserted ' + str(ct) + ' items successfully.')
+
+	    # close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
 
 if __name__ == '__main__':
     pop_data = load_csv('../raw/covid_county_population_usafacts.csv')
     pres_data = load_csv('../raw/president_county_candidate.csv')
-    covid_data = load_csv('../raw/covid_confirmed_usafacts.csv')
-    death_data = load_csv('../raw/covid_deaths_usafacts.csv')
+    covid_data = load_csv('../raw/covid_confirmed_usafacts (1).csv')
+    death_data = load_csv('../raw/covid_deaths_usafacts (1).csv')
     state_data = load_csv('../raw/state_abv.csv')
     vpop_data = load_csv('../raw/president_county.csv')
+
+    corrected_data = load_csv('../raw/corrected_cdata.csv')
+    insert_corrected_data(corrected_data)
+
+
     #temp_pres(pres_data)
     #temp_cov(covid_data)
     #temp_state(state_data)
     #temp_vpop(vpop_data)
-
-    insert_all_rows(covid_data, death_data)
+    #insert_all_rows(covid_data, death_data)
     #print(death_data)
