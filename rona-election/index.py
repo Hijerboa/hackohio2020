@@ -60,15 +60,10 @@ def geodata():
     else:
         cursor.close()
         error = 'Error: Invalid method specified!, Try one of {countydata, statedata, countystatedata}!'
-<<<<<<< HEAD
         response = jsonify({'err': error})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
     
-=======
-        return jsonify({'err': error})
-
->>>>>>> f6cfa9fd90daa6eab2270fb3ff0c300abc466856
     try:
         cursor.execute(query)
         records = cursor.fetchall()
