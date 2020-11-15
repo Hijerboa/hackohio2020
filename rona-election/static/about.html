@@ -18,11 +18,11 @@
 <body>
     <section>
         <header>
-            <link rel="stylesheet" href="style.css">
+            <link rel="stylesheet" href="about.css">
             <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
             <nav class="navbar navbar-expand-md">
                 <a class="navbar-bard" href="#" id="navBrand">
-                    <img src="#" width="30" height="30" alt="Rona Fraud">
+                    <img src="#" width="30" height="30" alt="Rona Election">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar">
                     <span class="navbar-toggler-icon"></span>
@@ -36,11 +36,21 @@
             </nav>
         </header>
         </br>
+        <div class="container">
+          <div class = "row">
+            <div class="col-lg-6 offset-lg-3">
+              <center><h1><b>Rona Election</b></h1>
+                <br>
+                <h4>This is a data visualization of the margin of Biden's victory in the 2020 presidential election vs the number of covid cases/100K residents per county in the United States</h4>
+                <h4>We used data from <a href="https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/">USAFacts</a> for the covid data, as well data from <a href="https://www.kaggle.com/unanimad/us-election-2020?select=president_county_candidate.csv">this</a> dataset for the election information</h4>
+              </center>
+            </div>
+          </div>
+        </div>
         <footer>
             <div id="botthing">
-                <p>© 2020 Copyright: The Meme Men</p>
+                <center><p>© 2020 Copyright: The Meme Men</p></center>
             </div>
-            <script src="{{ url_for('static', filename='map.js') }}"></script>
         </footer>
     </section>
 </body>
