@@ -1,10 +1,3 @@
-async function fetchDataFromDatabase() {
-  let response = await fetch("http://themememen.com/mapData");
-  console.log(response);
-  let result = await response.json();
-  return result;
-}
-
 $(document).ready(function(){
 	console.log("hello there");
 	map = L.map('map',{center: [31.51, -96.42], minZoom: 4, zoom: 4});
