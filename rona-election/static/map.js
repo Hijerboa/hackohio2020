@@ -3,7 +3,7 @@ var currentData = [];
 var cVisualization = 0;
 var map = null;
 
-function onSidebarClicked(e) {
+async function onSidebarClicked(e) {
   if (e === 'deathsAtDate') {
     if (cVisualization != 0){
       cVisualization = 0
@@ -56,25 +56,25 @@ async function requestCovidData(type) {
   var covidParams = new URLSearchParams();
   covidParams.append('method', type);
   covidParams.append('granularity', 'county');
-  var covidParams = new Request("http://themememen:5000/geodata?"+covidParams.toString());
+  var covidRequest = new Request("http://127.0.0.1:5000/coviddata?"+covidParams.toString());
 
-  res = await fetch(countyRequest).json();
-  console.log(res);
+  res = await Promise.all([(await fetch(covidRequest)).json()]);
+  //console.log(res);
   currentData = valsToNormalized(res);
-  console.log(currentData);
+  //console.log(currentData);
 }
 
 async function requestGeodata() {
   // TODO: In a live environment, the requests need changed to: http://themememen.com:5000/...
   var countyParams = new URLSearchParams();
   countyParams.append('method', 'countydata');
-  var countyRequest = new Request("http://themememen:5000/geodata?"+countyParams.toString());
+  var countyRequest = new Request("http://127.0.0.1:5000/geodata?"+countyParams.toString());
 
   var stateParams = new URLSearchParams();
   stateParams.append('method', 'statedata');
-  var stateRequest = new Request("http://themememen:5000/geodata?"+stateParams.toString());
+  var stateRequest = new Request("http://127.0.0.1:5000/geodata?"+stateParams.toString());
 
-  await requestCovidData(casesAtDate);
+  await requestCovidData('casesatdate');
 
   const [counties, states] = await Promise.all([
     (await fetch(countyRequest)).json(),
@@ -107,18 +107,20 @@ $(document).ready(function(){
 //Takes a list of (ID, Value) pairs, and returns (ID, color) pairs where color is a value between 0 and 255
 function valsToNormalized(dBOutputs) {
   let res = [];
-  let min = dBOutputs[0][1];
-  let max = dBOutputs[0][1];
+  let min = dBOutputs[0][0][1];
+  let max = dBOutputs[0][0][1];
   //Find min and max value
-  for(i = 0; i < dBOutputs.length; i++){
-    if(dBOutputs[i][1] > max){max = dBOutputs[i][1];}
-    if(dBOutputs[i][1] < min){min = dBOutputs[i][1];}
+  console.log(dBOutputs[0]);
+  for(i = 0; i < dBOutputs[0].length; i++){
+    if(dBOutputs[0][i][1] > max){max = dBOutputs[0][i][1];}
+    if(dBOutputs[0][i][1] < min){min = dBOutputs[0][i][1];}
   }
   //Find offset and scale values
   let offset = 0 - min;
   let scale = max - min;
-  for(i = 0; i < dBOutputs.length; i++){
-    res.push([dBOutputs[i][0], int(((dBOutputs[i][1] - offset) / scale) * 255)]);
+  for(i = 0; i < dBOutputs[0].length; i++){
+    res.push([dBOutputs[0][i][0], parseInt(((dBOutputs[0][i][1] - offset) / scale) * 255)]);
   }
+  console.log(res)
   return res;
 }
