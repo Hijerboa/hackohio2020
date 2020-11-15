@@ -1,7 +1,71 @@
 var countyObjects = [];
+var currentData = [];
+var cVisualization = 0;
 var map = null;
 
+function onSidebarClicked(e) {
+  if (e === 'deathsAtDate') {
+    if (cVisualization != 0){
+      cVisualization = 0
+      //Do things
+      await requestCovidData('deathsAtDate');
+      drawMap();
+
+    }
+  } else if (e === 'casesAtDate') {
+    if (cVisualization != 1){
+      cVisualization = 1
+      //Do things
+      await requestCovidData('casesAtDate');
+      drawMap();
+    }
+  } else if (e === 'deathsBy100kAtDate') {
+    if (cVisualization != 2){
+      cVisualization = 2
+      //Do things
+      await requestCovidData('deathsBy100kAtDate');
+      drawMap();
+    }
+  } else if (e === 'casesBy100kAtDate') {
+    if (cVisualization != 3){
+      cVisualization = 3
+      //Do things
+      await requestCovidData('casesBy100kAtDate');
+      drawMap();
+    }
+  } else if (e === 'deathsBy100kAtDateVsMOV') {
+    if (cVisualization != 4){
+      cVisualization = 4
+      //Do things
+      await requestCovidData('deathsBy100kAtDateVsMOV');
+      drawMap();
+    }
+  } else if (e === 'casesBy100kAtDateVsMOV') {
+    if (cVisualization != 5){
+      cVisualization = 5
+      await requestCovidData('casesBy100kAtDateVsMOV');
+      drawMap();
+      //Do things
+    }
+  } else {
+    console.log("Invalid sidebar option!");
+  }
+}
+
+async function requestCovidData(type) {
+  var covidParams = new URLSearchParams();
+  covidParams.append('method', type);
+  covidParams.append('granularity', 'county');
+  var covidParams = new Request("http://themememen:5000/geodata?"+covidParams.toString());
+
+  res = await fetch(countyRequest).json();
+  console.log(res);
+  currentData = valsToNormalized(res);
+  console.log(currentData);
+}
+
 async function requestGeodata() {
+  // TODO: In a live environment, the requests need changed to: http://themememen.com:5000/...
   var countyParams = new URLSearchParams();
   countyParams.append('method', 'countydata');
   var countyRequest = new Request("http://themememen:5000/geodata?"+countyParams.toString());
@@ -9,6 +73,8 @@ async function requestGeodata() {
   var stateParams = new URLSearchParams();
   stateParams.append('method', 'statedata');
   var stateRequest = new Request("http://themememen:5000/geodata?"+stateParams.toString());
+
+  await requestCovidData(casesAtDate);
 
   const [counties, states] = await Promise.all([
     (await fetch(countyRequest)).json(),
@@ -26,9 +92,9 @@ async function drawMap() {
     countyObjects = countyObjects.concat(states.map((e) => {
       return JSON.parse(e);
     }));
-    for(i=0; i<countyObjects.length; i++){
-      L.geoJson(countyObjects[i]).addTo(map);
-    }
+    countyObjects.map((e) => {
+      L.geoJson(e, {weight: 1}).addTo(map);
+    });
   });
 }
 
