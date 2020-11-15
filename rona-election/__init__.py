@@ -3,7 +3,6 @@ from configparser import ConfigParser
 import os
 
 from flask import Flask
-from flask_debugtoolbar import DebugToolbarExtension
 
 def create_app(test_config=None):
     # create and configure the app
@@ -22,8 +21,5 @@ def create_app(test_config=None):
     from . import index
 
     app.register_blueprint(index.bp)
-
-    toolbar = DebugToolbarExtension()
-    toolbar.init_app(app)
 
     return app
