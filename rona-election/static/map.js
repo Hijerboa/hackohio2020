@@ -40,3 +40,23 @@ $(document).ready(function(){
     });
   });
 });
+
+//Takes a list of (ID, Value) pairs, and returns (ID, color) pairs where color is a value between 0 and 255
+function valsToNormalized(dBOutputs) {
+  let res = [];
+  let min = dBOutputs[0][1];
+  let max = dBOutputs[0][1];
+  //Find min and max value
+  for(i = 0; i < dBOutputs.length; i++){
+    if(dBOutputs[i][1] > max){max = dBOutputs[i][1];}
+    if(dBOutputs[i][1] < min){min = dBOutputs[i][1];}
+  }
+  //Find offset and scale values
+  let offset = 0 - min;
+  let scale = max - min;
+  for(i = 0; i < dBOutputs.length; i++){
+    res.push([dBOutputs[i][0], int(((dBOutputs[i][1] - offset) / scale) * 255)]);
+  }
+  return res;
+}
+
